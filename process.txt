@@ -1,0 +1,53 @@
+mvn archetype:generate -DgroupId=coll.cmrit -DartifactId=my_app -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+cd my_app
+mvn package
+java -cp target/my_app-1.0-SNAPSHOT.jar coll.cmrit.App
+
+git config --global user.email "kova23cs@cmrit.ac.in"
+git config --global user.name "Kolli-Vaishnavi"
+
+git init
+git add .
+git commit -m "Initial commit"
+
+ls -al ~/.ssh
+ssh-keygen -t ed25519 -C "kova23cs@cmrit.ac.in"
+Enter y enter enter
+cat ~/.ssh/id_ed25519.pub
+Put in github
+
+git remote add origin git@github.com:Kolli-Vaishnavi/my_app.git
+git branch -M main
+git push -u origin main (these 3 can be copied from the new repo page directly)
+
+http://localhost:8080
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+
+New item, name. Pipeline, pipeline script:
+pipeline {
+ agent any
+ stages {
+
+  stage('Checkout') {
+   steps {
+    git branch: 'main',
+    url: 'https://github.com/Kolli-Vaishnavi/my_app.git'
+   }
+  }
+
+  stage('Build') {
+   steps {
+    sh 'mvn clean package'
+   }
+  }
+
+  stage('Test') {
+   steps {
+    sh 'mvn test'
+   }
+  }
+
+ }
+}
+
+Apply, save, build now
